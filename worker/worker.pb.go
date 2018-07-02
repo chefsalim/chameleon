@@ -18,6 +18,158 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+type ErrCode int32
+
+const (
+	// Generic
+	ErrCode_BUG                ErrCode = 0
+	ErrCode_TIMEOUT            ErrCode = 1
+	ErrCode_REMOTE_REJECTED    ErrCode = 2
+	ErrCode_BAD_REMOTE_REPLY   ErrCode = 3
+	ErrCode_ENTITY_NOT_FOUND   ErrCode = 4
+	ErrCode_NO_SHARD           ErrCode = 6
+	ErrCode_ACCESS_DENIED      ErrCode = 7
+	ErrCode_SESSION_EXPIRED    ErrCode = 8
+	ErrCode_ENTITY_CONFLICT    ErrCode = 9
+	ErrCode_SOCK               ErrCode = 10
+	ErrCode_DATA_STORE         ErrCode = 11
+	ErrCode_BAD_TOKEN          ErrCode = 12
+	ErrCode_REMOTE_UNAVAILABLE ErrCode = 13
+	ErrCode_SYS                ErrCode = 14
+	// Worker
+	ErrCode_WORKSPACE_SETUP      ErrCode = 1000
+	ErrCode_SECRET_KEY_FETCH     ErrCode = 1001
+	ErrCode_SECRET_KEY_IMPORT    ErrCode = 1002
+	ErrCode_VCS_CLONE            ErrCode = 1003
+	ErrCode_BUILD                ErrCode = 1004
+	ErrCode_POST_PROCESSOR       ErrCode = 1005
+	ErrCode_INVALID_INTEGRATIONS ErrCode = 1006
+	ErrCode_EXPORT               ErrCode = 1007
+	// RouteSrv
+	ErrCode_REG_CONFLICT  ErrCode = 2000
+	ErrCode_REG_NOT_FOUND ErrCode = 2001
+	// Scheduler
+	ErrCode_GROUP_NOT_COMPLETE        ErrCode = 3000
+	ErrCode_PARTIAL_JOB_GROUP_PROMOTE ErrCode = 3001
+)
+
+var ErrCode_name = map[int32]string{
+	0:    "BUG",
+	1:    "TIMEOUT",
+	2:    "REMOTE_REJECTED",
+	3:    "BAD_REMOTE_REPLY",
+	4:    "ENTITY_NOT_FOUND",
+	6:    "NO_SHARD",
+	7:    "ACCESS_DENIED",
+	8:    "SESSION_EXPIRED",
+	9:    "ENTITY_CONFLICT",
+	10:   "SOCK",
+	11:   "DATA_STORE",
+	12:   "BAD_TOKEN",
+	13:   "REMOTE_UNAVAILABLE",
+	14:   "SYS",
+	1000: "WORKSPACE_SETUP",
+	1001: "SECRET_KEY_FETCH",
+	1002: "SECRET_KEY_IMPORT",
+	1003: "VCS_CLONE",
+	1004: "BUILD",
+	1005: "POST_PROCESSOR",
+	1006: "INVALID_INTEGRATIONS",
+	1007: "EXPORT",
+	2000: "REG_CONFLICT",
+	2001: "REG_NOT_FOUND",
+	3000: "GROUP_NOT_COMPLETE",
+	3001: "PARTIAL_JOB_GROUP_PROMOTE",
+}
+var ErrCode_value = map[string]int32{
+	"BUG":                       0,
+	"TIMEOUT":                   1,
+	"REMOTE_REJECTED":           2,
+	"BAD_REMOTE_REPLY":          3,
+	"ENTITY_NOT_FOUND":          4,
+	"NO_SHARD":                  6,
+	"ACCESS_DENIED":             7,
+	"SESSION_EXPIRED":           8,
+	"ENTITY_CONFLICT":           9,
+	"SOCK":                      10,
+	"DATA_STORE":                11,
+	"BAD_TOKEN":                 12,
+	"REMOTE_UNAVAILABLE":        13,
+	"SYS":                       14,
+	"WORKSPACE_SETUP":           1000,
+	"SECRET_KEY_FETCH":          1001,
+	"SECRET_KEY_IMPORT":         1002,
+	"VCS_CLONE":                 1003,
+	"BUILD":                     1004,
+	"POST_PROCESSOR":            1005,
+	"INVALID_INTEGRATIONS":      1006,
+	"EXPORT":                    1007,
+	"REG_CONFLICT":              2000,
+	"REG_NOT_FOUND":             2001,
+	"GROUP_NOT_COMPLETE":        3000,
+	"PARTIAL_JOB_GROUP_PROMOTE": 3001,
+}
+
+func (x ErrCode) Enum() *ErrCode {
+	p := new(ErrCode)
+	*p = x
+	return p
+}
+func (x ErrCode) String() string {
+	return proto.EnumName(ErrCode_name, int32(x))
+}
+func (x *ErrCode) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(ErrCode_value, data, "ErrCode")
+	if err != nil {
+		return err
+	}
+	*x = ErrCode(value)
+	return nil
+}
+func (ErrCode) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{0}
+}
+
+type OriginPackageVisibility int32
+
+const (
+	OriginPackageVisibility_Public  OriginPackageVisibility = 1
+	OriginPackageVisibility_Private OriginPackageVisibility = 2
+	OriginPackageVisibility_Hidden  OriginPackageVisibility = 3
+)
+
+var OriginPackageVisibility_name = map[int32]string{
+	1: "Public",
+	2: "Private",
+	3: "Hidden",
+}
+var OriginPackageVisibility_value = map[string]int32{
+	"Public":  1,
+	"Private": 2,
+	"Hidden":  3,
+}
+
+func (x OriginPackageVisibility) Enum() *OriginPackageVisibility {
+	p := new(OriginPackageVisibility)
+	*p = x
+	return p
+}
+func (x OriginPackageVisibility) String() string {
+	return proto.EnumName(OriginPackageVisibility_name, int32(x))
+}
+func (x *OriginPackageVisibility) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(OriginPackageVisibility_value, data, "OriginPackageVisibility")
+	if err != nil {
+		return err
+	}
+	*x = OriginPackageVisibility(value)
+	return nil
+}
+func (OriginPackageVisibility) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{1}
+}
+
+// Jobsrv
 type Os int32
 
 const (
@@ -54,7 +206,7 @@ func (x *Os) UnmarshalJSON(data []byte) error {
 	return nil
 }
 func (Os) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_worker_be6db57fb5a7a807, []int{0}
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{2}
 }
 
 type WorkerState int32
@@ -90,7 +242,558 @@ func (x *WorkerState) UnmarshalJSON(data []byte) error {
 	return nil
 }
 func (WorkerState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_worker_be6db57fb5a7a807, []int{1}
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{3}
+}
+
+type WorkerOperation int32
+
+const (
+	WorkerOperation_StartJob  WorkerOperation = 0
+	WorkerOperation_CancelJob WorkerOperation = 1
+)
+
+var WorkerOperation_name = map[int32]string{
+	0: "StartJob",
+	1: "CancelJob",
+}
+var WorkerOperation_value = map[string]int32{
+	"StartJob":  0,
+	"CancelJob": 1,
+}
+
+func (x WorkerOperation) Enum() *WorkerOperation {
+	p := new(WorkerOperation)
+	*p = x
+	return p
+}
+func (x WorkerOperation) String() string {
+	return proto.EnumName(WorkerOperation_name, int32(x))
+}
+func (x *WorkerOperation) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(WorkerOperation_value, data, "WorkerOperation")
+	if err != nil {
+		return err
+	}
+	*x = WorkerOperation(value)
+	return nil
+}
+func (WorkerOperation) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{4}
+}
+
+type JobState int32
+
+const (
+	JobState_Pending          JobState = 0
+	JobState_Processing       JobState = 1
+	JobState_Complete         JobState = 2
+	JobState_Rejected         JobState = 3
+	JobState_Failed           JobState = 4
+	JobState_Dispatched       JobState = 5
+	JobState_CancelPending    JobState = 6
+	JobState_CancelProcessing JobState = 7
+	JobState_CancelComplete   JobState = 8
+)
+
+var JobState_name = map[int32]string{
+	0: "Pending",
+	1: "Processing",
+	2: "Complete",
+	3: "Rejected",
+	4: "Failed",
+	5: "Dispatched",
+	6: "CancelPending",
+	7: "CancelProcessing",
+	8: "CancelComplete",
+}
+var JobState_value = map[string]int32{
+	"Pending":          0,
+	"Processing":       1,
+	"Complete":         2,
+	"Rejected":         3,
+	"Failed":           4,
+	"Dispatched":       5,
+	"CancelPending":    6,
+	"CancelProcessing": 7,
+	"CancelComplete":   8,
+}
+
+func (x JobState) Enum() *JobState {
+	p := new(JobState)
+	*p = x
+	return p
+}
+func (x JobState) String() string {
+	return proto.EnumName(JobState_name, int32(x))
+}
+func (x *JobState) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(JobState_value, data, "JobState")
+	if err != nil {
+		return err
+	}
+	*x = JobState(value)
+	return nil
+}
+func (JobState) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{5}
+}
+
+type NetError struct {
+	Code                 *ErrCode `protobuf:"varint,1,opt,name=code,enum=worker.ErrCode" json:"code,omitempty"`
+	Msg                  *string  `protobuf:"bytes,2,opt,name=msg" json:"msg,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *NetError) Reset()         { *m = NetError{} }
+func (m *NetError) String() string { return proto.CompactTextString(m) }
+func (*NetError) ProtoMessage()    {}
+func (*NetError) Descriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{0}
+}
+func (m *NetError) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_NetError.Unmarshal(m, b)
+}
+func (m *NetError) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_NetError.Marshal(b, m, deterministic)
+}
+func (dst *NetError) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NetError.Merge(dst, src)
+}
+func (m *NetError) XXX_Size() int {
+	return xxx_messageInfo_NetError.Size(m)
+}
+func (m *NetError) XXX_DiscardUnknown() {
+	xxx_messageInfo_NetError.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_NetError proto.InternalMessageInfo
+
+func (m *NetError) GetCode() ErrCode {
+	if m != nil && m.Code != nil {
+		return *m.Code
+	}
+	return ErrCode_BUG
+}
+
+func (m *NetError) GetMsg() string {
+	if m != nil && m.Msg != nil {
+		return *m.Msg
+	}
+	return ""
+}
+
+type OriginPackageIdent struct {
+	Origin               *string  `protobuf:"bytes,1,opt,name=origin" json:"origin,omitempty"`
+	Name                 *string  `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	Version              *string  `protobuf:"bytes,3,opt,name=version" json:"version,omitempty"`
+	Release              *string  `protobuf:"bytes,4,opt,name=release" json:"release,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *OriginPackageIdent) Reset()         { *m = OriginPackageIdent{} }
+func (m *OriginPackageIdent) String() string { return proto.CompactTextString(m) }
+func (*OriginPackageIdent) ProtoMessage()    {}
+func (*OriginPackageIdent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{1}
+}
+func (m *OriginPackageIdent) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OriginPackageIdent.Unmarshal(m, b)
+}
+func (m *OriginPackageIdent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OriginPackageIdent.Marshal(b, m, deterministic)
+}
+func (dst *OriginPackageIdent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OriginPackageIdent.Merge(dst, src)
+}
+func (m *OriginPackageIdent) XXX_Size() int {
+	return xxx_messageInfo_OriginPackageIdent.Size(m)
+}
+func (m *OriginPackageIdent) XXX_DiscardUnknown() {
+	xxx_messageInfo_OriginPackageIdent.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OriginPackageIdent proto.InternalMessageInfo
+
+func (m *OriginPackageIdent) GetOrigin() string {
+	if m != nil && m.Origin != nil {
+		return *m.Origin
+	}
+	return ""
+}
+
+func (m *OriginPackageIdent) GetName() string {
+	if m != nil && m.Name != nil {
+		return *m.Name
+	}
+	return ""
+}
+
+func (m *OriginPackageIdent) GetVersion() string {
+	if m != nil && m.Version != nil {
+		return *m.Version
+	}
+	return ""
+}
+
+func (m *OriginPackageIdent) GetRelease() string {
+	if m != nil && m.Release != nil {
+		return *m.Release
+	}
+	return ""
+}
+
+type OriginProject struct {
+	Id                   *uint64                  `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
+	OriginId             *uint64                  `protobuf:"varint,2,opt,name=origin_id,json=originId" json:"origin_id,omitempty"`
+	OriginName           *string                  `protobuf:"bytes,3,opt,name=origin_name,json=originName" json:"origin_name,omitempty"`
+	PackageName          *string                  `protobuf:"bytes,4,opt,name=package_name,json=packageName" json:"package_name,omitempty"`
+	Name                 *string                  `protobuf:"bytes,5,opt,name=name" json:"name,omitempty"`
+	PlanPath             *string                  `protobuf:"bytes,6,opt,name=plan_path,json=planPath" json:"plan_path,omitempty"`
+	OwnerId              *uint64                  `protobuf:"varint,7,opt,name=owner_id,json=ownerId" json:"owner_id,omitempty"`
+	VcsType              *string                  `protobuf:"bytes,8,opt,name=vcs_type,json=vcsType" json:"vcs_type,omitempty"`
+	VcsData              *string                  `protobuf:"bytes,9,opt,name=vcs_data,json=vcsData" json:"vcs_data,omitempty"`
+	VcsInstallationId    *uint32                  `protobuf:"varint,12,opt,name=vcs_installation_id,json=vcsInstallationId" json:"vcs_installation_id,omitempty"`
+	Visibility           *OriginPackageVisibility `protobuf:"varint,13,opt,name=visibility,enum=worker.OriginPackageVisibility" json:"visibility,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
+}
+
+func (m *OriginProject) Reset()         { *m = OriginProject{} }
+func (m *OriginProject) String() string { return proto.CompactTextString(m) }
+func (*OriginProject) ProtoMessage()    {}
+func (*OriginProject) Descriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{2}
+}
+func (m *OriginProject) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OriginProject.Unmarshal(m, b)
+}
+func (m *OriginProject) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OriginProject.Marshal(b, m, deterministic)
+}
+func (dst *OriginProject) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OriginProject.Merge(dst, src)
+}
+func (m *OriginProject) XXX_Size() int {
+	return xxx_messageInfo_OriginProject.Size(m)
+}
+func (m *OriginProject) XXX_DiscardUnknown() {
+	xxx_messageInfo_OriginProject.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OriginProject proto.InternalMessageInfo
+
+func (m *OriginProject) GetId() uint64 {
+	if m != nil && m.Id != nil {
+		return *m.Id
+	}
+	return 0
+}
+
+func (m *OriginProject) GetOriginId() uint64 {
+	if m != nil && m.OriginId != nil {
+		return *m.OriginId
+	}
+	return 0
+}
+
+func (m *OriginProject) GetOriginName() string {
+	if m != nil && m.OriginName != nil {
+		return *m.OriginName
+	}
+	return ""
+}
+
+func (m *OriginProject) GetPackageName() string {
+	if m != nil && m.PackageName != nil {
+		return *m.PackageName
+	}
+	return ""
+}
+
+func (m *OriginProject) GetName() string {
+	if m != nil && m.Name != nil {
+		return *m.Name
+	}
+	return ""
+}
+
+func (m *OriginProject) GetPlanPath() string {
+	if m != nil && m.PlanPath != nil {
+		return *m.PlanPath
+	}
+	return ""
+}
+
+func (m *OriginProject) GetOwnerId() uint64 {
+	if m != nil && m.OwnerId != nil {
+		return *m.OwnerId
+	}
+	return 0
+}
+
+func (m *OriginProject) GetVcsType() string {
+	if m != nil && m.VcsType != nil {
+		return *m.VcsType
+	}
+	return ""
+}
+
+func (m *OriginProject) GetVcsData() string {
+	if m != nil && m.VcsData != nil {
+		return *m.VcsData
+	}
+	return ""
+}
+
+func (m *OriginProject) GetVcsInstallationId() uint32 {
+	if m != nil && m.VcsInstallationId != nil {
+		return *m.VcsInstallationId
+	}
+	return 0
+}
+
+func (m *OriginProject) GetVisibility() OriginPackageVisibility {
+	if m != nil && m.Visibility != nil {
+		return *m.Visibility
+	}
+	return OriginPackageVisibility_Public
+}
+
+type OriginIntegration struct {
+	Origin               *string  `protobuf:"bytes,1,opt,name=origin" json:"origin,omitempty"`
+	Integration          *string  `protobuf:"bytes,2,opt,name=integration" json:"integration,omitempty"`
+	Name                 *string  `protobuf:"bytes,3,opt,name=name" json:"name,omitempty"`
+	Body                 *string  `protobuf:"bytes,4,opt,name=body" json:"body,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *OriginIntegration) Reset()         { *m = OriginIntegration{} }
+func (m *OriginIntegration) String() string { return proto.CompactTextString(m) }
+func (*OriginIntegration) ProtoMessage()    {}
+func (*OriginIntegration) Descriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{3}
+}
+func (m *OriginIntegration) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OriginIntegration.Unmarshal(m, b)
+}
+func (m *OriginIntegration) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OriginIntegration.Marshal(b, m, deterministic)
+}
+func (dst *OriginIntegration) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OriginIntegration.Merge(dst, src)
+}
+func (m *OriginIntegration) XXX_Size() int {
+	return xxx_messageInfo_OriginIntegration.Size(m)
+}
+func (m *OriginIntegration) XXX_DiscardUnknown() {
+	xxx_messageInfo_OriginIntegration.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OriginIntegration proto.InternalMessageInfo
+
+func (m *OriginIntegration) GetOrigin() string {
+	if m != nil && m.Origin != nil {
+		return *m.Origin
+	}
+	return ""
+}
+
+func (m *OriginIntegration) GetIntegration() string {
+	if m != nil && m.Integration != nil {
+		return *m.Integration
+	}
+	return ""
+}
+
+func (m *OriginIntegration) GetName() string {
+	if m != nil && m.Name != nil {
+		return *m.Name
+	}
+	return ""
+}
+
+func (m *OriginIntegration) GetBody() string {
+	if m != nil && m.Body != nil {
+		return *m.Body
+	}
+	return ""
+}
+
+type OriginProjectIntegration struct {
+	Origin               *string  `protobuf:"bytes,1,opt,name=origin" json:"origin,omitempty"`
+	Name                 *string  `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	Integration          *string  `protobuf:"bytes,3,opt,name=integration" json:"integration,omitempty"`
+	IntegrationName      *string  `protobuf:"bytes,4,opt,name=integration_name,json=integrationName" json:"integration_name,omitempty"`
+	Body                 *string  `protobuf:"bytes,5,opt,name=body" json:"body,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *OriginProjectIntegration) Reset()         { *m = OriginProjectIntegration{} }
+func (m *OriginProjectIntegration) String() string { return proto.CompactTextString(m) }
+func (*OriginProjectIntegration) ProtoMessage()    {}
+func (*OriginProjectIntegration) Descriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{4}
+}
+func (m *OriginProjectIntegration) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OriginProjectIntegration.Unmarshal(m, b)
+}
+func (m *OriginProjectIntegration) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OriginProjectIntegration.Marshal(b, m, deterministic)
+}
+func (dst *OriginProjectIntegration) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OriginProjectIntegration.Merge(dst, src)
+}
+func (m *OriginProjectIntegration) XXX_Size() int {
+	return xxx_messageInfo_OriginProjectIntegration.Size(m)
+}
+func (m *OriginProjectIntegration) XXX_DiscardUnknown() {
+	xxx_messageInfo_OriginProjectIntegration.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OriginProjectIntegration proto.InternalMessageInfo
+
+func (m *OriginProjectIntegration) GetOrigin() string {
+	if m != nil && m.Origin != nil {
+		return *m.Origin
+	}
+	return ""
+}
+
+func (m *OriginProjectIntegration) GetName() string {
+	if m != nil && m.Name != nil {
+		return *m.Name
+	}
+	return ""
+}
+
+func (m *OriginProjectIntegration) GetIntegration() string {
+	if m != nil && m.Integration != nil {
+		return *m.Integration
+	}
+	return ""
+}
+
+func (m *OriginProjectIntegration) GetIntegrationName() string {
+	if m != nil && m.IntegrationName != nil {
+		return *m.IntegrationName
+	}
+	return ""
+}
+
+func (m *OriginProjectIntegration) GetBody() string {
+	if m != nil && m.Body != nil {
+		return *m.Body
+	}
+	return ""
+}
+
+type OriginSecret struct {
+	Id                   *uint64  `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
+	OriginId             *uint64  `protobuf:"varint,2,opt,name=origin_id,json=originId" json:"origin_id,omitempty"`
+	Name                 *string  `protobuf:"bytes,3,opt,name=name" json:"name,omitempty"`
+	Value                *string  `protobuf:"bytes,4,opt,name=value" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *OriginSecret) Reset()         { *m = OriginSecret{} }
+func (m *OriginSecret) String() string { return proto.CompactTextString(m) }
+func (*OriginSecret) ProtoMessage()    {}
+func (*OriginSecret) Descriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{5}
+}
+func (m *OriginSecret) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OriginSecret.Unmarshal(m, b)
+}
+func (m *OriginSecret) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OriginSecret.Marshal(b, m, deterministic)
+}
+func (dst *OriginSecret) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OriginSecret.Merge(dst, src)
+}
+func (m *OriginSecret) XXX_Size() int {
+	return xxx_messageInfo_OriginSecret.Size(m)
+}
+func (m *OriginSecret) XXX_DiscardUnknown() {
+	xxx_messageInfo_OriginSecret.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OriginSecret proto.InternalMessageInfo
+
+func (m *OriginSecret) GetId() uint64 {
+	if m != nil && m.Id != nil {
+		return *m.Id
+	}
+	return 0
+}
+
+func (m *OriginSecret) GetOriginId() uint64 {
+	if m != nil && m.OriginId != nil {
+		return *m.OriginId
+	}
+	return 0
+}
+
+func (m *OriginSecret) GetName() string {
+	if m != nil && m.Name != nil {
+		return *m.Name
+	}
+	return ""
+}
+
+func (m *OriginSecret) GetValue() string {
+	if m != nil && m.Value != nil {
+		return *m.Value
+	}
+	return ""
+}
+
+type OriginSecretDecrypted struct {
+	DecryptedSecret      *OriginSecret `protobuf:"bytes,1,opt,name=decrypted_secret,json=decryptedSecret" json:"decrypted_secret,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *OriginSecretDecrypted) Reset()         { *m = OriginSecretDecrypted{} }
+func (m *OriginSecretDecrypted) String() string { return proto.CompactTextString(m) }
+func (*OriginSecretDecrypted) ProtoMessage()    {}
+func (*OriginSecretDecrypted) Descriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{6}
+}
+func (m *OriginSecretDecrypted) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OriginSecretDecrypted.Unmarshal(m, b)
+}
+func (m *OriginSecretDecrypted) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OriginSecretDecrypted.Marshal(b, m, deterministic)
+}
+func (dst *OriginSecretDecrypted) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OriginSecretDecrypted.Merge(dst, src)
+}
+func (m *OriginSecretDecrypted) XXX_Size() int {
+	return xxx_messageInfo_OriginSecretDecrypted.Size(m)
+}
+func (m *OriginSecretDecrypted) XXX_DiscardUnknown() {
+	xxx_messageInfo_OriginSecretDecrypted.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OriginSecretDecrypted proto.InternalMessageInfo
+
+func (m *OriginSecretDecrypted) GetDecryptedSecret() *OriginSecret {
+	if m != nil {
+		return m.DecryptedSecret
+	}
+	return nil
 }
 
 type Heartbeat struct {
@@ -106,7 +809,7 @@ func (m *Heartbeat) Reset()         { *m = Heartbeat{} }
 func (m *Heartbeat) String() string { return proto.CompactTextString(m) }
 func (*Heartbeat) ProtoMessage()    {}
 func (*Heartbeat) Descriptor() ([]byte, []int) {
-	return fileDescriptor_worker_be6db57fb5a7a807, []int{0}
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{7}
 }
 func (m *Heartbeat) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Heartbeat.Unmarshal(m, b)
@@ -147,26 +850,303 @@ func (m *Heartbeat) GetState() WorkerState {
 	return WorkerState_Ready
 }
 
-func init() {
-	proto.RegisterType((*Heartbeat)(nil), "worker.Heartbeat")
-	proto.RegisterEnum("worker.Os", Os_name, Os_value)
-	proto.RegisterEnum("worker.WorkerState", WorkerState_name, WorkerState_value)
+type WorkerCommand struct {
+	Op                   *WorkerOperation `protobuf:"varint,1,opt,name=op,enum=worker.WorkerOperation" json:"op,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
-func init() { proto.RegisterFile("worker.proto", fileDescriptor_worker_be6db57fb5a7a807) }
+func (m *WorkerCommand) Reset()         { *m = WorkerCommand{} }
+func (m *WorkerCommand) String() string { return proto.CompactTextString(m) }
+func (*WorkerCommand) ProtoMessage()    {}
+func (*WorkerCommand) Descriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{8}
+}
+func (m *WorkerCommand) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_WorkerCommand.Unmarshal(m, b)
+}
+func (m *WorkerCommand) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_WorkerCommand.Marshal(b, m, deterministic)
+}
+func (dst *WorkerCommand) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WorkerCommand.Merge(dst, src)
+}
+func (m *WorkerCommand) XXX_Size() int {
+	return xxx_messageInfo_WorkerCommand.Size(m)
+}
+func (m *WorkerCommand) XXX_DiscardUnknown() {
+	xxx_messageInfo_WorkerCommand.DiscardUnknown(m)
+}
 
-var fileDescriptor_worker_be6db57fb5a7a807 = []byte{
-	// 188 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x8c, 0xb1, 0x8b, 0x83, 0x30,
-	0x14, 0x87, 0x2f, 0xf1, 0xf4, 0xf4, 0x79, 0x1c, 0xe1, 0xdd, 0x22, 0x4e, 0xe2, 0x64, 0x1d, 0x1c,
-	0xfa, 0x27, 0x94, 0x0e, 0x1d, 0x0a, 0x42, 0x3a, 0x38, 0xa7, 0x98, 0x21, 0x14, 0x12, 0x49, 0x22,
-	0xd6, 0xff, 0xbe, 0xa8, 0x6d, 0xe9, 0xf4, 0xf8, 0xf8, 0xde, 0xf7, 0x83, 0xdf, 0xc9, 0xd8, 0x9b,
-	0xb4, 0xcd, 0x60, 0x8d, 0x37, 0x18, 0x6d, 0x54, 0x6a, 0x48, 0x4e, 0x52, 0x58, 0x7f, 0x95, 0xc2,
-	0x63, 0x0e, 0xb1, 0xd4, 0xfd, 0x60, 0x94, 0xf6, 0x19, 0x29, 0x48, 0x95, 0xf0, 0x37, 0x63, 0x0e,
-	0xd4, 0xb8, 0x8c, 0x16, 0xa4, 0xfa, 0xdb, 0x43, 0xf3, 0xdc, 0x6a, 0x1d, 0xa7, 0xc6, 0xe1, 0x0e,
-	0x42, 0xe7, 0x85, 0x97, 0x59, 0xb0, 0xea, 0xff, 0x97, 0xee, 0xd6, 0x73, 0x59, 0x14, 0xdf, 0x3e,
-	0xea, 0x0a, 0x68, 0xeb, 0x30, 0x81, 0xf0, 0xac, 0xf4, 0x78, 0x67, 0x04, 0x01, 0xa2, 0xa3, 0xb0,
-	0x93, 0xd2, 0x8c, 0x62, 0x0a, 0x3f, 0x9d, 0xd2, 0xbd, 0x99, 0x1c, 0x0b, 0xea, 0x12, 0xd2, 0x8f,
-	0x7e, 0x49, 0xb8, 0x14, 0xfd, 0xcc, 0xbe, 0x30, 0x86, 0xef, 0xc3, 0xe8, 0x66, 0x46, 0x1e, 0x01,
-	0x00, 0x00, 0xff, 0xff, 0xf2, 0xbd, 0xf2, 0x42, 0xd4, 0x00, 0x00, 0x00,
+var xxx_messageInfo_WorkerCommand proto.InternalMessageInfo
+
+func (m *WorkerCommand) GetOp() WorkerOperation {
+	if m != nil && m.Op != nil {
+		return *m.Op
+	}
+	return WorkerOperation_StartJob
+}
+
+type Job struct {
+	Id                   *uint64                     `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
+	OwnerId              *uint64                     `protobuf:"varint,2,opt,name=owner_id,json=ownerId" json:"owner_id,omitempty"`
+	State                *JobState                   `protobuf:"varint,3,opt,name=state,enum=worker.JobState" json:"state,omitempty"`
+	Project              *OriginProject              `protobuf:"bytes,4,opt,name=project" json:"project,omitempty"`
+	Error                *NetError                   `protobuf:"bytes,5,opt,name=error" json:"error,omitempty"`
+	CreatedAt            *string                     `protobuf:"bytes,6,opt,name=created_at,json=createdAt" json:"created_at,omitempty"`
+	BuildStartedAt       *string                     `protobuf:"bytes,7,opt,name=build_started_at,json=buildStartedAt" json:"build_started_at,omitempty"`
+	BuildFinishedAt      *string                     `protobuf:"bytes,8,opt,name=build_finished_at,json=buildFinishedAt" json:"build_finished_at,omitempty"`
+	PackageIdent         *OriginPackageIdent         `protobuf:"bytes,9,opt,name=package_ident,json=packageIdent" json:"package_ident,omitempty"`
+	IsArchived           *bool                       `protobuf:"varint,11,opt,name=is_archived,json=isArchived" json:"is_archived,omitempty"`
+	Integrations         []*OriginIntegration        `protobuf:"bytes,12,rep,name=integrations" json:"integrations,omitempty"`
+	Channel              *string                     `protobuf:"bytes,13,opt,name=channel" json:"channel,omitempty"`
+	ProjectIntegrations  []*OriginProjectIntegration `protobuf:"bytes,14,rep,name=project_integrations,json=projectIntegrations" json:"project_integrations,omitempty"`
+	Worker               *string                     `protobuf:"bytes,15,opt,name=worker" json:"worker,omitempty"`
+	Secrets              []*OriginSecretDecrypted    `protobuf:"bytes,16,rep,name=secrets" json:"secrets,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
+}
+
+func (m *Job) Reset()         { *m = Job{} }
+func (m *Job) String() string { return proto.CompactTextString(m) }
+func (*Job) ProtoMessage()    {}
+func (*Job) Descriptor() ([]byte, []int) {
+	return fileDescriptor_worker_eaba13d3cc320f29, []int{9}
+}
+func (m *Job) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Job.Unmarshal(m, b)
+}
+func (m *Job) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Job.Marshal(b, m, deterministic)
+}
+func (dst *Job) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Job.Merge(dst, src)
+}
+func (m *Job) XXX_Size() int {
+	return xxx_messageInfo_Job.Size(m)
+}
+func (m *Job) XXX_DiscardUnknown() {
+	xxx_messageInfo_Job.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Job proto.InternalMessageInfo
+
+func (m *Job) GetId() uint64 {
+	if m != nil && m.Id != nil {
+		return *m.Id
+	}
+	return 0
+}
+
+func (m *Job) GetOwnerId() uint64 {
+	if m != nil && m.OwnerId != nil {
+		return *m.OwnerId
+	}
+	return 0
+}
+
+func (m *Job) GetState() JobState {
+	if m != nil && m.State != nil {
+		return *m.State
+	}
+	return JobState_Pending
+}
+
+func (m *Job) GetProject() *OriginProject {
+	if m != nil {
+		return m.Project
+	}
+	return nil
+}
+
+func (m *Job) GetError() *NetError {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *Job) GetCreatedAt() string {
+	if m != nil && m.CreatedAt != nil {
+		return *m.CreatedAt
+	}
+	return ""
+}
+
+func (m *Job) GetBuildStartedAt() string {
+	if m != nil && m.BuildStartedAt != nil {
+		return *m.BuildStartedAt
+	}
+	return ""
+}
+
+func (m *Job) GetBuildFinishedAt() string {
+	if m != nil && m.BuildFinishedAt != nil {
+		return *m.BuildFinishedAt
+	}
+	return ""
+}
+
+func (m *Job) GetPackageIdent() *OriginPackageIdent {
+	if m != nil {
+		return m.PackageIdent
+	}
+	return nil
+}
+
+func (m *Job) GetIsArchived() bool {
+	if m != nil && m.IsArchived != nil {
+		return *m.IsArchived
+	}
+	return false
+}
+
+func (m *Job) GetIntegrations() []*OriginIntegration {
+	if m != nil {
+		return m.Integrations
+	}
+	return nil
+}
+
+func (m *Job) GetChannel() string {
+	if m != nil && m.Channel != nil {
+		return *m.Channel
+	}
+	return ""
+}
+
+func (m *Job) GetProjectIntegrations() []*OriginProjectIntegration {
+	if m != nil {
+		return m.ProjectIntegrations
+	}
+	return nil
+}
+
+func (m *Job) GetWorker() string {
+	if m != nil && m.Worker != nil {
+		return *m.Worker
+	}
+	return ""
+}
+
+func (m *Job) GetSecrets() []*OriginSecretDecrypted {
+	if m != nil {
+		return m.Secrets
+	}
+	return nil
+}
+
+func init() {
+	proto.RegisterType((*NetError)(nil), "worker.NetError")
+	proto.RegisterType((*OriginPackageIdent)(nil), "worker.OriginPackageIdent")
+	proto.RegisterType((*OriginProject)(nil), "worker.OriginProject")
+	proto.RegisterType((*OriginIntegration)(nil), "worker.OriginIntegration")
+	proto.RegisterType((*OriginProjectIntegration)(nil), "worker.OriginProjectIntegration")
+	proto.RegisterType((*OriginSecret)(nil), "worker.OriginSecret")
+	proto.RegisterType((*OriginSecretDecrypted)(nil), "worker.OriginSecretDecrypted")
+	proto.RegisterType((*Heartbeat)(nil), "worker.Heartbeat")
+	proto.RegisterType((*WorkerCommand)(nil), "worker.WorkerCommand")
+	proto.RegisterType((*Job)(nil), "worker.Job")
+	proto.RegisterEnum("worker.ErrCode", ErrCode_name, ErrCode_value)
+	proto.RegisterEnum("worker.OriginPackageVisibility", OriginPackageVisibility_name, OriginPackageVisibility_value)
+	proto.RegisterEnum("worker.Os", Os_name, Os_value)
+	proto.RegisterEnum("worker.WorkerState", WorkerState_name, WorkerState_value)
+	proto.RegisterEnum("worker.WorkerOperation", WorkerOperation_name, WorkerOperation_value)
+	proto.RegisterEnum("worker.JobState", JobState_name, JobState_value)
+}
+
+func init() { proto.RegisterFile("worker.proto", fileDescriptor_worker_eaba13d3cc320f29) }
+
+var fileDescriptor_worker_eaba13d3cc320f29 = []byte{
+	// 1395 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0xcb, 0x52, 0xdc, 0x46,
+	0x17, 0x66, 0x6e, 0x68, 0xe6, 0xcc, 0xad, 0x69, 0xb0, 0x19, 0xec, 0xf2, 0x6f, 0xfe, 0x49, 0x55,
+	0x82, 0x59, 0x90, 0x2a, 0x36, 0xc9, 0x26, 0x71, 0x09, 0x8d, 0x00, 0xc1, 0x20, 0xa9, 0x5a, 0x02,
+	0x9b, 0x95, 0x4a, 0x33, 0xea, 0x40, 0xc7, 0x83, 0xa4, 0x92, 0x04, 0x84, 0x17, 0xc9, 0x2a, 0xfb,
+	0xbc, 0x42, 0xf2, 0x16, 0xc9, 0x5b, 0xe4, 0x9e, 0x85, 0x5f, 0x20, 0xd5, 0xdd, 0xd2, 0xa0, 0xb1,
+	0x71, 0x55, 0xb2, 0x1a, 0x9d, 0xef, 0x9c, 0x3e, 0xf7, 0xf3, 0x0d, 0x74, 0x6e, 0xa3, 0xe4, 0x0d,
+	0x4d, 0x76, 0xe2, 0x24, 0xca, 0x22, 0xbc, 0x2c, 0xa5, 0xa1, 0x0a, 0x4d, 0x93, 0x66, 0x7a, 0x92,
+	0x44, 0x09, 0xfe, 0x08, 0xea, 0xd3, 0x28, 0xa0, 0x83, 0xca, 0x66, 0x65, 0xab, 0xb7, 0xdb, 0xdf,
+	0xc9, 0x1f, 0xe8, 0x49, 0xa2, 0x45, 0x01, 0x25, 0x42, 0x89, 0x11, 0xd4, 0xae, 0xd2, 0x8b, 0x41,
+	0x75, 0xb3, 0xb2, 0xd5, 0x22, 0xfc, 0x73, 0x98, 0x01, 0xb6, 0x12, 0x76, 0xc1, 0x42, 0xdb, 0x9f,
+	0xbe, 0xf1, 0x2f, 0xa8, 0x11, 0xd0, 0x30, 0xc3, 0x8f, 0x61, 0x39, 0x12, 0xa8, 0x70, 0xd7, 0x22,
+	0xb9, 0x84, 0x31, 0xd4, 0x43, 0xff, 0x8a, 0xe6, 0x0e, 0xc4, 0x37, 0x1e, 0x80, 0x72, 0x43, 0x93,
+	0x94, 0x45, 0xe1, 0xa0, 0x26, 0xe0, 0x42, 0xe4, 0x9a, 0x84, 0xce, 0xa8, 0x9f, 0xd2, 0x41, 0x5d,
+	0x6a, 0x72, 0x71, 0xf8, 0xb6, 0x0a, 0xdd, 0x3c, 0x6c, 0x12, 0x7d, 0x4d, 0xa7, 0x19, 0xee, 0x41,
+	0x95, 0x05, 0x22, 0x5a, 0x9d, 0x54, 0x59, 0x80, 0x9f, 0x42, 0x4b, 0xc6, 0xf4, 0x58, 0x20, 0xc2,
+	0xd5, 0x49, 0x53, 0x02, 0x46, 0x80, 0x9f, 0x43, 0x3b, 0x57, 0x8a, 0x6c, 0x64, 0x58, 0x90, 0x90,
+	0xc9, 0x73, 0xfa, 0x3f, 0x74, 0x62, 0x59, 0x8f, 0xb4, 0x90, 0xe1, 0xdb, 0x39, 0x26, 0x4c, 0x8a,
+	0x52, 0x1a, 0xa5, 0x52, 0x9e, 0x42, 0x2b, 0x9e, 0xf9, 0xa1, 0x17, 0xfb, 0xd9, 0xe5, 0x60, 0x59,
+	0x28, 0x9a, 0x1c, 0xb0, 0xfd, 0xec, 0x12, 0x6f, 0x40, 0x33, 0xba, 0x0d, 0x69, 0xc2, 0x13, 0x52,
+	0x44, 0x42, 0x8a, 0x90, 0x8d, 0x80, 0xab, 0x6e, 0xa6, 0xa9, 0x97, 0xdd, 0xc5, 0x74, 0xd0, 0xcc,
+	0x7b, 0x30, 0x4d, 0xdd, 0xbb, 0x98, 0x16, 0xaa, 0xc0, 0xcf, 0xfc, 0x41, 0x6b, 0xae, 0x1a, 0xf9,
+	0x99, 0x8f, 0x77, 0x60, 0x95, 0xab, 0x58, 0x98, 0x66, 0xfe, 0x6c, 0xe6, 0x67, 0x2c, 0x12, 0xc5,
+	0x76, 0x36, 0x2b, 0x5b, 0x5d, 0xb2, 0x72, 0x33, 0x4d, 0x8d, 0x92, 0xc6, 0x08, 0xf0, 0x4b, 0x80,
+	0x1b, 0x96, 0xb2, 0x09, 0x9b, 0xb1, 0xec, 0x6e, 0xd0, 0x15, 0x73, 0x7e, 0x5e, 0xcc, 0x79, 0x61,
+	0x88, 0x67, 0x73, 0x33, 0x52, 0x7a, 0x32, 0xbc, 0x86, 0x15, 0x69, 0x66, 0x84, 0x19, 0xbd, 0x48,
+	0x84, 0xdf, 0x0f, 0x8e, 0x7a, 0x13, 0xda, 0xec, 0xde, 0x2c, 0x9f, 0x78, 0x19, 0x9a, 0x77, 0xb0,
+	0x56, 0xea, 0x20, 0x86, 0xfa, 0x24, 0x0a, 0xee, 0xf2, 0x86, 0x8b, 0xef, 0xe1, 0xf7, 0x15, 0x18,
+	0x2c, 0x0c, 0xfb, 0xdf, 0x84, 0x7f, 0x68, 0xd3, 0xde, 0x49, 0xa9, 0xf6, 0x7e, 0x4a, 0x2f, 0x00,
+	0x95, 0xc4, 0xf2, 0xec, 0xfb, 0x25, 0xdc, 0x2c, 0x67, 0xda, 0x28, 0x65, 0x4a, 0xa1, 0x23, 0x13,
+	0x75, 0xe8, 0x34, 0xa1, 0xff, 0x71, 0x29, 0x1f, 0x6a, 0xc7, 0x1a, 0x34, 0x6e, 0xfc, 0xd9, 0x75,
+	0x91, 0x84, 0x14, 0x86, 0xaf, 0xe1, 0x51, 0x39, 0xcc, 0x88, 0x4e, 0x93, 0xbb, 0x38, 0xa3, 0x7c,
+	0xc2, 0x28, 0x28, 0x04, 0x2f, 0x15, 0x4a, 0x11, 0xbd, 0xbd, 0xbb, 0xb6, 0x38, 0x67, 0xf9, 0x90,
+	0xf4, 0xe7, 0xd6, 0x12, 0x18, 0x86, 0xd0, 0x3a, 0xa4, 0x7e, 0x92, 0x4d, 0xa8, 0x9f, 0xe1, 0x27,
+	0xd0, 0xa4, 0x61, 0x10, 0x47, 0x2c, 0xcc, 0xf2, 0xe6, 0xce, 0x65, 0xfc, 0x04, 0xaa, 0x51, 0x2a,
+	0x4a, 0xe8, 0xed, 0xc2, 0xdc, 0x77, 0x4a, 0xaa, 0x51, 0x8a, 0x5f, 0x40, 0x23, 0xcd, 0xfc, 0x4c,
+	0x56, 0xd2, 0xdb, 0x5d, 0x2d, 0xd4, 0xaf, 0xc4, 0x8f, 0xc3, 0x55, 0x44, 0x5a, 0x0c, 0x3f, 0x87,
+	0xae, 0x44, 0xb5, 0xe8, 0xea, 0xca, 0x0f, 0x03, 0xfc, 0x09, 0x54, 0xa3, 0x38, 0xe7, 0xa0, 0xf5,
+	0xc5, 0x87, 0x56, 0x4c, 0x65, 0xfb, 0x49, 0x35, 0x8a, 0x87, 0xdf, 0x36, 0xa0, 0x76, 0x14, 0x4d,
+	0xde, 0x6b, 0x71, 0xf9, 0xca, 0xaa, 0x8b, 0x57, 0xf6, 0xf1, 0x62, 0x5e, 0xa8, 0x70, 0x7f, 0x14,
+	0x4d, 0xca, 0x49, 0xe1, 0x4f, 0x41, 0x89, 0xe5, 0xa2, 0x89, 0xb6, 0xb7, 0x77, 0x1f, 0xbd, 0x73,
+	0x24, 0x52, 0x49, 0x0a, 0x2b, 0xee, 0x98, 0x72, 0x0e, 0x15, 0xbb, 0xd0, 0xbe, 0x77, 0x5c, 0x70,
+	0x2b, 0x91, 0x6a, 0xfc, 0x0c, 0x60, 0x9a, 0x50, 0x9f, 0x0f, 0xc7, 0xcf, 0x72, 0x7e, 0x68, 0xe5,
+	0x88, 0x9a, 0xe1, 0x2d, 0x40, 0x93, 0x6b, 0x36, 0x0b, 0xbc, 0x34, 0xf3, 0x93, 0xdc, 0x48, 0x11,
+	0x46, 0x3d, 0x81, 0x3b, 0x12, 0x56, 0x33, 0xbc, 0x0d, 0x2b, 0xd2, 0xf2, 0x2b, 0x16, 0xb2, 0xf4,
+	0x52, 0x9a, 0x4a, 0xe2, 0xe8, 0x0b, 0xc5, 0x7e, 0x8e, 0xab, 0x19, 0x7e, 0x09, 0xdd, 0x82, 0xca,
+	0x18, 0xe7, 0x66, 0xc1, 0x22, 0xed, 0xdd, 0x27, 0x0f, 0x1e, 0xbe, 0x60, 0x6f, 0x52, 0x70, 0x9f,
+	0xe4, 0xf2, 0xe7, 0xd0, 0x66, 0xa9, 0xe7, 0x27, 0xd3, 0x4b, 0x76, 0x43, 0x83, 0x41, 0x7b, 0xb3,
+	0xb2, 0xd5, 0x24, 0xc0, 0x52, 0x35, 0x47, 0xf0, 0x17, 0xd0, 0x29, 0x1d, 0x47, 0x3a, 0xe8, 0x6c,
+	0xd6, 0xb6, 0xda, 0xbb, 0x1b, 0x8b, 0x01, 0x4a, 0x37, 0x4b, 0x16, 0xcc, 0x39, 0xcb, 0x4f, 0x2f,
+	0xfd, 0x30, 0xa4, 0x33, 0xc1, 0x49, 0x2d, 0x52, 0x88, 0xd8, 0x81, 0xb5, 0xbc, 0xc5, 0xde, 0x42,
+	0x80, 0x9e, 0x08, 0xb0, 0xf9, 0xe0, 0x54, 0xca, 0x71, 0x56, 0xe3, 0xf7, 0xb0, 0x94, 0x13, 0x86,
+	0x7c, 0x37, 0xe8, 0x4b, 0xc2, 0x90, 0x12, 0xfe, 0x0c, 0x14, 0x79, 0x31, 0xe9, 0x00, 0x09, 0xff,
+	0xcf, 0x1e, 0x3a, 0x99, 0xf9, 0xad, 0x91, 0xc2, 0xfa, 0xa8, 0xde, 0x04, 0xd4, 0x26, 0xca, 0x2c,
+	0xba, 0xf0, 0xae, 0x93, 0xd9, 0xf6, 0xdb, 0x1a, 0x28, 0xf9, 0x9f, 0x26, 0x56, 0xa0, 0xb6, 0x77,
+	0x7a, 0x80, 0x96, 0x70, 0x1b, 0x14, 0xd7, 0x38, 0xd1, 0xad, 0x53, 0x17, 0x55, 0xf0, 0x2a, 0xf4,
+	0x89, 0x7e, 0x62, 0xb9, 0xba, 0x47, 0xf4, 0x23, 0x5d, 0x73, 0xf5, 0x11, 0xaa, 0xe2, 0x35, 0x40,
+	0x7b, 0xea, 0xc8, 0x9b, 0x2b, 0xec, 0xf1, 0x39, 0xaa, 0x71, 0x54, 0x37, 0x5d, 0xc3, 0x3d, 0xf7,
+	0x4c, 0xcb, 0xf5, 0xf6, 0xad, 0x53, 0x73, 0x84, 0xea, 0xb8, 0x03, 0x4d, 0xd3, 0xf2, 0x9c, 0x43,
+	0x95, 0x8c, 0xd0, 0x32, 0x5e, 0x81, 0xae, 0xaa, 0x69, 0xba, 0xe3, 0x78, 0x23, 0xdd, 0x34, 0xf4,
+	0x11, 0x52, 0x78, 0x04, 0x47, 0x77, 0x1c, 0xc3, 0x32, 0x3d, 0xfd, 0xb5, 0x6d, 0x10, 0x7d, 0x84,
+	0x9a, 0x1c, 0xcc, 0x7d, 0x69, 0x96, 0xb9, 0x3f, 0x36, 0x34, 0x17, 0xb5, 0x70, 0x13, 0xea, 0x8e,
+	0xa5, 0x1d, 0x23, 0xc0, 0x3d, 0x80, 0x91, 0xea, 0xaa, 0x9e, 0xe3, 0x5a, 0x44, 0x47, 0x6d, 0xdc,
+	0x85, 0x16, 0x4f, 0xc8, 0xb5, 0x8e, 0x75, 0x13, 0x75, 0xf0, 0x63, 0xc0, 0x79, 0x6e, 0xa7, 0xa6,
+	0x7a, 0xa6, 0x1a, 0x63, 0x75, 0x6f, 0xac, 0xa3, 0x2e, 0x2f, 0xd1, 0x39, 0x77, 0x50, 0x0f, 0xaf,
+	0x41, 0xff, 0x95, 0x45, 0x8e, 0x1d, 0x5b, 0xd5, 0x74, 0xcf, 0xd1, 0xdd, 0x53, 0x1b, 0xfd, 0xa2,
+	0xe0, 0x47, 0x80, 0x1c, 0x5d, 0x23, 0xba, 0xeb, 0x1d, 0xeb, 0xe7, 0xde, 0xbe, 0xee, 0x6a, 0x87,
+	0xe8, 0x57, 0x05, 0x3f, 0x86, 0x95, 0x12, 0x6c, 0x9c, 0xd8, 0x16, 0x71, 0xd1, 0x6f, 0x0a, 0xee,
+	0x41, 0xeb, 0x4c, 0x73, 0x3c, 0x6d, 0x6c, 0x99, 0x3a, 0xfa, 0x5d, 0xc1, 0x00, 0x8d, 0xbd, 0x53,
+	0x63, 0x3c, 0x42, 0x7f, 0xf0, 0xa2, 0x7a, 0xb6, 0xe5, 0xb8, 0x9e, 0x4d, 0x2c, 0x5e, 0xad, 0x45,
+	0xd0, 0x9f, 0x0a, 0xde, 0x80, 0x35, 0xc3, 0x3c, 0x53, 0xc7, 0xc6, 0xc8, 0x33, 0x4c, 0x57, 0x3f,
+	0x20, 0xaa, 0x6b, 0x58, 0xa6, 0x83, 0xfe, 0x52, 0x70, 0x1b, 0x96, 0xf5, 0xd7, 0xc2, 0xf1, 0xdf,
+	0x0a, 0x5e, 0x81, 0x0e, 0xd1, 0x0f, 0xee, 0x2b, 0xff, 0xa9, 0x8f, 0x31, 0x74, 0x39, 0x74, 0xdf,
+	0xd8, 0x9f, 0xfb, 0x78, 0x1d, 0xf0, 0x01, 0xb1, 0x4e, 0x6d, 0x81, 0x6a, 0xd6, 0x89, 0x3d, 0xd6,
+	0x5d, 0x1d, 0xfd, 0xb0, 0x8e, 0xff, 0x07, 0x1b, 0xb6, 0x4a, 0x5c, 0x43, 0x1d, 0x7b, 0x47, 0xd6,
+	0x9e, 0x27, 0x8d, 0x6c, 0x62, 0xf1, 0x8e, 0xa0, 0x1f, 0xd7, 0xb7, 0xbf, 0x84, 0xf5, 0x0f, 0xfc,
+	0x83, 0x62, 0x80, 0x65, 0xfb, 0x7a, 0x32, 0x63, 0x53, 0x54, 0xe1, 0x7b, 0x60, 0x27, 0xec, 0xc6,
+	0xcf, 0x28, 0xaa, 0x72, 0xc5, 0x21, 0x0b, 0x02, 0x1a, 0xa2, 0xda, 0xf6, 0x16, 0x54, 0xad, 0x14,
+	0xb7, 0xa0, 0x31, 0x66, 0xe1, 0xf5, 0x37, 0xa8, 0xc2, 0x95, 0x23, 0x3f, 0xb9, 0x65, 0x21, 0xaa,
+	0xf2, 0x57, 0xaf, 0x58, 0x18, 0x44, 0xb7, 0x29, 0xaa, 0x6d, 0x0f, 0xa1, 0x5d, 0x22, 0x52, 0xfe,
+	0x84, 0x50, 0x3f, 0xb8, 0x43, 0x4b, 0x7c, 0x96, 0x7b, 0xd7, 0xe9, 0x1d, 0xaa, 0x6c, 0xef, 0x40,
+	0xff, 0x1d, 0xce, 0xe4, 0x3b, 0x23, 0xf8, 0xe3, 0x28, 0x9a, 0xa0, 0x25, 0x3e, 0x5c, 0xcd, 0x0f,
+	0xa7, 0x74, 0xc6, 0xc5, 0xca, 0xf6, 0x77, 0x15, 0x68, 0x16, 0x2c, 0x28, 0x72, 0xa4, 0x61, 0xc0,
+	0xc2, 0x0b, 0xb4, 0xc4, 0xb7, 0xc2, 0x4e, 0xa2, 0x29, 0x4d, 0x53, 0x2e, 0x57, 0xb8, 0x1b, 0x2d,
+	0xba, 0x8a, 0x67, 0x54, 0x54, 0xd0, 0x81, 0x26, 0xa1, 0xfc, 0xc2, 0x68, 0x80, 0x6a, 0x3c, 0xe5,
+	0x7d, 0x9f, 0xcd, 0x68, 0x80, 0xea, 0x62, 0x9b, 0x58, 0x1a, 0xfb, 0xd9, 0xf4, 0x92, 0x06, 0xa8,
+	0xc1, 0x97, 0x54, 0x06, 0x2c, 0x5c, 0x2f, 0xf3, 0xdd, 0xce, 0xa1, 0xfb, 0x00, 0x0a, 0xc6, 0xd0,
+	0x93, 0xe8, 0x3c, 0x4c, 0xf3, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xb8, 0x07, 0xc9, 0x8a, 0xbd,
+	0x0a, 0x00, 0x00,
 }

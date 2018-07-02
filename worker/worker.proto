@@ -1,6 +1,105 @@
 syntax = "proto2";
 package worker;
 
+// Net
+
+enum ErrCode {
+  // Generic
+  BUG = 0;
+  TIMEOUT = 1;
+  REMOTE_REJECTED = 2;
+  BAD_REMOTE_REPLY = 3;
+  ENTITY_NOT_FOUND = 4;
+  NO_SHARD = 6;
+  ACCESS_DENIED = 7;
+  SESSION_EXPIRED = 8;
+  ENTITY_CONFLICT = 9;
+  SOCK = 10;
+  DATA_STORE = 11;
+  BAD_TOKEN = 12;
+  REMOTE_UNAVAILABLE = 13;
+  SYS = 14;
+
+  // Worker
+  WORKSPACE_SETUP = 1000;
+  SECRET_KEY_FETCH = 1001;
+  SECRET_KEY_IMPORT = 1002;
+  VCS_CLONE = 1003;
+  BUILD = 1004;
+  POST_PROCESSOR = 1005;
+  INVALID_INTEGRATIONS = 1006;
+  EXPORT = 1007;
+
+  // RouteSrv
+  REG_CONFLICT = 2000;
+  REG_NOT_FOUND = 2001;
+
+  // Scheduler
+  GROUP_NOT_COMPLETE = 3000;
+  PARTIAL_JOB_GROUP_PROMOTE = 3001;
+}
+
+message NetError {
+  optional ErrCode code = 1;
+  optional string msg = 2;
+}
+
+// OriginSrv
+
+message OriginPackageIdent {
+  optional string origin = 1;
+  optional string name = 2;
+  optional string version = 3;
+  optional string release = 4;
+}
+
+enum OriginPackageVisibility {
+  Public = 1;
+  Private = 2;
+  Hidden = 3;
+}
+
+message OriginProject {
+  optional uint64 id = 1;
+  optional uint64 origin_id = 2;
+  optional string origin_name = 3;
+  optional string package_name = 4;
+  optional string name = 5;
+  optional string plan_path = 6;
+  optional uint64 owner_id = 7;
+  optional string vcs_type = 8;
+  optional string vcs_data = 9;
+  optional uint32 vcs_installation_id = 12;
+  optional OriginPackageVisibility visibility = 13;
+}
+
+message OriginIntegration {
+  optional string origin = 1;
+  optional string integration = 2;
+  optional string name = 3;
+  optional string body = 4;
+}
+
+message OriginProjectIntegration {
+  optional string origin = 1;
+  optional string name = 2;
+  optional string integration = 3;
+  optional string integration_name = 4;
+  optional string body = 5;
+}
+
+message OriginSecret {
+  optional uint64 id = 1;
+  optional uint64 origin_id = 2;
+  optional string name = 3;
+  optional string value = 4;
+}
+
+message OriginSecretDecrypted {
+  optional OriginSecret decrypted_secret = 1;
+}
+
+// Jobsrv
 enum Os {
   Linux = 1;
   Darwin = 2;
@@ -16,4 +115,45 @@ message Heartbeat {
   optional string endpoint = 1;
   optional Os os = 2;
   optional WorkerState state = 3;
+}
+
+enum WorkerOperation {
+  StartJob = 0;
+  CancelJob = 1;
+}
+
+enum JobState {
+  Pending = 0;
+  Processing = 1;
+  Complete = 2;
+  Rejected = 3;
+  Failed = 4;
+  Dispatched = 5;
+  CancelPending = 6;
+  CancelProcessing = 7;
+  CancelComplete = 8;
+}
+
+message WorkerCommand {
+  optional WorkerOperation op = 1;
+}
+
+message Job {
+  reserved 10;
+  reserved "log_url";
+  optional uint64 id = 1;
+  optional uint64 owner_id = 2;
+  optional JobState state = 3;
+  optional OriginProject project = 4;
+  optional NetError error = 5;
+  optional string created_at = 6; // RFC3339-formatted time
+  optional string build_started_at = 7; // RFC3339-formatted time
+  optional string build_finished_at = 8;
+  optional OriginPackageIdent package_ident = 9;
+  optional bool is_archived = 11;
+  repeated OriginIntegration integrations = 12;
+  optional string channel = 13;
+  repeated OriginProjectIntegration project_integrations = 14;
+  optional string worker = 15;
+  repeated OriginSecretDecrypted secrets = 16;
 }
